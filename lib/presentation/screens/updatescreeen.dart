@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:simplebloc/blocs/postbloc/postbloc.dart';
 import 'package:simplebloc/blocs/postbloc/postevent.dart';
 import 'package:simplebloc/blocs/updatebloc/updatebloc.dart';
 import 'package:simplebloc/blocs/updatebloc/updateevent.dart';
 import 'package:simplebloc/data/model/postmodel.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:simplebloc/presentation/screens/homescreen.dart';
 import '../../blocs/updatebloc/updatestate.dart';
 
 class UpdateScreen extends StatefulWidget {

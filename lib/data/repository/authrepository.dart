@@ -1,9 +1,10 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
+import 'package:simplebloc/blocs/authenticationbloc/authenticationbloc.dart';
 
 class AuthRepository {
+  AuthRepository();
+
   String baseUrl = 'https://learnunstoppable.com/fileshare/api/login';
 
   Future<dynamic> authenticateUser(String email, String password) async {
@@ -18,6 +19,9 @@ class AuthRepository {
 
       if (response.statusCode == 200) {
         token = result['data']['fcm_token'];
+        if (token.isNotEmpty) {
+          AuthenticationBloc().persistToken(token);
+        }
       }
     } catch (err) {
       rethrow;

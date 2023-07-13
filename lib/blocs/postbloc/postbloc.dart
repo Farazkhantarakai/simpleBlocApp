@@ -5,7 +5,6 @@ import 'package:simplebloc/data/repository/postrepository.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
   PostRepository _postRepository;
-
   PostBloc(this._postRepository) : super(LoadingPostState()) {
     on<LoadPostEvent>((event, emit) async {
       emit(LoadingPostState());

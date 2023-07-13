@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simplebloc/blocs/authenticationbloc/authenticationbloc.dart';
 import 'package:simplebloc/blocs/postbloc/postbloc.dart';
 import 'package:simplebloc/blocs/postbloc/postevent.dart';
 import 'package:simplebloc/blocs/postbloc/poststate.dart';
 import 'package:simplebloc/data/model/postmodel.dart';
 import 'package:simplebloc/data/repository/postrepository.dart';
 import 'package:get/get.dart';
+import 'package:simplebloc/presentation/screens/signinscreen.dart';
 import './updatescreeen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,6 +20,17 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: const Color.fromARGB(255, 5, 54, 94),
           title: const Text('Posts '),
           centerTitle: true,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  AuthenticationBloc().clearToken();
+                  Get.off(() => const LogInScreen());
+                },
+                icon: const Icon(
+                  Icons.exit_to_app,
+                  color: Colors.white,
+                ))
+          ],
         ),
         body: blocBody());
   }

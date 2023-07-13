@@ -9,13 +9,10 @@ class PostRepository {
 
   Future<List<PostsModel>> fetchPost() async {
     List<PostsModel> posts = [];
-
     http.Response response = await http.get(Uri.parse(baseUrl));
-
     try {
       if (response.statusCode == 200) {
         final List result = jsonDecode(response.body);
-
         posts = result
             .map((singlePost) => PostsModel.fromJson(singlePost))
             .toList();
@@ -34,10 +31,7 @@ class PostRepository {
       final response = await http.patch(
           Uri.parse(
               'https://jsonplaceholder.typicode.com/posts/${id.toString()}'),
-          body: {
-            'title': pm.title,
-            'body': pm.body,
-          });
+          body: {'title': pm.title, 'body': pm.body});
 
       debugPrint(response.body);
 
