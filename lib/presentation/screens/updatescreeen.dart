@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:simplebloc/blocs/postbloc/postbloc.dart';
+import 'package:simplebloc/blocs/postbloc/postevent.dart';
 import 'package:simplebloc/blocs/updatebloc/updatebloc.dart';
 import 'package:simplebloc/blocs/updatebloc/updateevent.dart';
 import 'package:simplebloc/data/model/postmodel.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:simplebloc/presentation/screens/homescreen.dart';
 import '../../blocs/updatebloc/updatestate.dart';
 
 class UpdateScreen extends StatefulWidget {
@@ -18,7 +22,7 @@ class UpdateScreen extends StatefulWidget {
 class _UpdateScreenState extends State<UpdateScreen> {
   int? userId;
 
-  int? id;
+  String? id;
 
   String? nbody;
 
@@ -59,7 +63,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
                     TextFormField(
                       initialValue: widget.model.id.toString(),
                       onChanged: (val) {
-                        id = int.tryParse(val);
+                        id = val;
                       },
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(
@@ -69,7 +73,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
                       height: 5,
                     ),
                     TextFormField(
-                      initialValue: widget.model.title,
+                      initialValue: title ??= widget.model.title,
                       onChanged: (val) {
                         title = val;
                       },
@@ -81,7 +85,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
                       height: 5,
                     ),
                     TextFormField(
-                      initialValue: widget.model.body,
+                      initialValue: nbody ?? widget.model.body,
                       onChanged: (val) {
                         nbody = val;
                       },
@@ -110,11 +114,10 @@ class _UpdateScreenState extends State<UpdateScreen> {
                                 const Color.fromARGB(255, 5, 54, 94),
                             fixedSize: Size(mdq.width * 0.9, 50)),
                         onPressed: () {
-                          // userId ??= widget.model.userId;
-                          // id ??= widget.model.id;
-                          // title ??= widget.model.title!;
-                          // nbody ??= widget.model.body!;
-                          // debugPrint(nbody);
+                          id ??= widget.model.id;
+                          userId ??= widget.model.userId;
+                          nbody ??= widget.model.body;
+                          title ??= widget.model.title;
 
                           PostsModel pm = PostsModel(
                               id: id,
@@ -122,10 +125,10 @@ class _UpdateScreenState extends State<UpdateScreen> {
                               title: title,
                               body: nbody);
 
-                          debugPrint(pm.toJson().toString());
-
                           BlocProvider.of<UpdateBloc>(context)
-                              .add(UpdatePressedEvent(postId: widget.model.id));
+                              .add(UpdatePressedEvent(id: pm.id, post: pm));
+                          BlocProvider.of<PostBloc>(context)
+                              .add(LoadPostEvent());
                         },
                         child: const Text(
                           'Update',

@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
+
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:simplebloc/data/model/postmodel.dart';
 
@@ -25,15 +26,20 @@ class PostRepository {
     return posts;
   }
 
-  Future<String?> updatePost(PostsModel pm) async {
-    String nresponse = '';
-    debugPrint(pm.runtimeType.toString());
+  Future<dynamic> updatePost(
+      {required String id, required PostsModel pm}) async {
+    var nresponse = '';
+
     try {
       final response = await http.patch(
-          Uri.parse('https://jsonplaceholder.typicode.com/posts/${pm.id}'),
-          body: pm.toJson());
+          Uri.parse(
+              'https://jsonplaceholder.typicode.com/posts/${id.toString()}'),
+          body: {
+            'title': pm.title,
+            'body': pm.body,
+          });
 
-      debugPrint(response.toString());
+      debugPrint(response.body);
 
       if (response.statusCode == 200) {
         nresponse = 'success';

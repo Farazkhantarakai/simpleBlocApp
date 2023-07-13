@@ -1,6 +1,6 @@
 class PostsModel {
   int? userId;
-  int? id;
+  String? id;
   String? title;
   String? body;
 
@@ -8,7 +8,7 @@ class PostsModel {
 
   PostsModel.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
-    id = json['id'];
+    id = json['id'].toString();
     title = json['title'];
     body = json['body'];
   }
